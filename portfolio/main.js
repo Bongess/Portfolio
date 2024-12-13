@@ -1,4 +1,4 @@
-//Toggling Menu
+
 const showMenu = (toggleId, navId) => {
     const toggle = document.getElementById(toggleId);
     const nav = document.getElementById(navId);
@@ -12,7 +12,7 @@ const showMenu = (toggleId, navId) => {
 
 showMenu('nav-toggle', 'nav-menu');
 
-//Toggling Active Link
+
 const navLink = document.querySelectorAll('.nav-link');
 
 function linkAction() {
@@ -25,7 +25,7 @@ function linkAction() {
 
 navLink.forEach(n => n.addEventListener('click', linkAction));
 
-// Scroll Reveal
+
 
 const sr = ScrollReveal({
     origin: 'top',
