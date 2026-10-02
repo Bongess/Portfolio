@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tomáš Bobál — Grafický designér</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="ruler" aria-hidden="true">
+  <span class="label-left mono">PLÁTNO — PORTFOLIO.HTML</span>
+  <div class="ticks"><div class="playhead" id="playhead"></div></div>
+  <span class="label-right mono" id="rulerActive">ÚVOD</span>
+  <div class="progress" id="progress"></div>
+</div>
+
+<button class="layers-toggle" id="layersToggle">Vrstvy ▾</button>
+<div class="layers-overlay-bg" id="overlayBg"></div>
+
+<nav class="layers-panel" id="layersPanel">
+  <div class="panel-title">Vrstvy dokumentu</div>
+  <a class="layer-item" data-target="uvod" href="#uvod"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L01</span><span class="swatch" style="background:var(--coral)"></span>Úvod</a>
+  <a class="layer-item" data-target="o-mne" href="#o-mne"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L02</span><span class="swatch" style="background:var(--blue)"></span>O mně</a>
+  <a class="layer-item" data-target="vzdelani" href="#vzdelani"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L03</span><span class="swatch" style="background:var(--yellow)"></span>Vzdělání</a>
+  <a class="layer-item" data-target="zkusenosti" href="#zkusenosti"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L04</span><span class="swatch" style="background:var(--coral)"></span>Zkušenosti</a>
+  <a class="layer-item" data-target="dovednosti" href="#dovednosti"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L05</span><span class="swatch" style="background:var(--blue)"></span>Dovednosti</a>
+  <a class="layer-item" data-target="tvorba" href="#tvorba"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L06</span><span class="swatch" style="background:var(--yellow)"></span>Tvorba</a>
+  <a class="layer-item" data-target="kontakt" href="#kontakt"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L07</span><span class="swatch" style="background:var(--ink)"></span>Kontakt</a>
+</nav>
+
+<main>
+
+<!-- ÚVOD -->
+<section id="uvod" class="section hero">
+  <div class="hero-shapes" aria-hidden="true">
+    <div class="shape s1"><i></i></div>
+    <div class="shape s2"><i></i></div>
+    <div class="shape s3"><i></i></div>
+  </div>
+  <div class="wrap">
+    <div class="hero-eyebrow fade-up" style="--d:.1s">Grafický designér &amp; trochu vývojář</div>
+    <h1>
+      <span class="line"><span>Tomáš Bobál</span></span>
+      <span class="line"><span>tvořím <span class="mark">vizuální identity</span>.</span></span>
+    </h1>
+    <p class="hero-sub fade-up" style="--d:.8s">Poslední 3 roky proměňuju nápady v plakáty, loga, obaly a uživatelská rozhraní. Pár věcí si přitom umím i sám naprogramovat — od jednoduchého webu po interaktivní detail.</p>
+    <div class="hero-cta fade-up" style="--d:1s">
+      <a href="#tvorba" class="btn btn-solid">Zobrazit tvorbu <span class="arrow">→</span></a>
+      <a href="#kontakt" class="btn btn-outline">Napsat mi</a>
+    </div>
+    <div class="swatch-row" aria-hidden="true">
+      <div class="swatch-chip" style="--i:0"><div class="sq" style="background:var(--coral)"></div><span class="code mono">C0 M82 Y82 K0</span></div>
+      <div class="swatch-chip" style="--i:1"><div class="sq" style="background:var(--blue)"></div><span class="code mono">C90 M70 Y0 K0</span></div>
+      <div class="swatch-chip" style="--i:2"><div class="sq" style="background:var(--yellow)"></div><span class="code mono">C0 M20 Y75 K0</span></div>
+      <div class="swatch-chip" style="--i:3"><div class="sq" style="background:var(--ink)"></div><span class="code mono">C0 M0 Y0 K92</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- O MNĚ -->
+<section id="o-mne" class="section about reveal">
+  <div class="wrap">
+    <div class="kicker"><span class="dot"></span>O mně</div>
+    <div class="about-grid">
+      <div class="portrait">
+        <div class="crop tl"></div><div class="crop tr"></div><div class="crop bl"></div><div class="crop br"></div>
+        <div class="portrait-label mono">TB_PORTRET.JPG</div>
+      </div>
+      <div class="about-text">
+        <h2 style="margin-bottom:20px;"><span class="h2-mask"><span class="h2-in">Design je pro mě řemeslo s pravidly — i s místem na hru.</span></span></h2>
+        <p class="st">Jsem <strong>grafický designér</strong>, který má kromě Illustratoru a Photoshopu otevřený i editor kódu. Většinu času řeším vizuální identitu, tiskoviny a digitální design, ale rád si projekt i sám naprogramuju — ať jde o jednostránkový web, nebo drobnou interaktivní animaci.</p>
+        <p class="st">Baví mě práce, kde má každý detail svůj důvod: zvolené písmo, mezera mezi řádky, barva, která se vrací v celém systému. Pracuju rád v malém týmu i samostatně, s jasným zadáním i s prázdnou stránkou.</p>
+        <div class="stat-row">
+          <div class="stat st"><div class="num" data-count="3" data-suffix="+">3+</div><div class="lbl">let praxe</div></div>
+          <div class="stat st"><div class="num" data-count="40" data-suffix="+">40+</div><div class="lbl">dokončených projektů</div></div>
+          <div class="stat st"><div class="num" data-count="12">12</div><div class="lbl">spokojených klientů</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VZDĚLÁNÍ -->
+<section id="vzdelani" class="section education reveal">
+  <div class="wrap">
+    <div class="kicker"><span class="dot" style="background:var(--yellow)"></span>Vzdělání</div>
+    <h2><span class="h2-mask"><span class="h2-in">Odkud to všechno vychází</span></span></h2>
+    <div class="timeline">
+      <div class="t-item st">
+        <span class="t-period mono">2023 — 2027</span>
+        <h3>Střední škola Baltaci</h3>
+        <span class="t-org">Obor IT</span>
+        <p>Zaměření na základy grafického designu a digitálního vývoje.</p>
+      </div>
+      <div class="t-item st">
+        <span class="t-period mono">2025</span>
+        <h3>Kurz Graphic Design</h3>
+        <span class="t-org">Online akademie</span>
+        <p>Základy kresby, typografie a digitální grafiky. Rozšíření zkušeností s Adobe balíkem a sazbou.</p>
+      </div>
+      <div class="t-item st">
+        <span class="t-period mono">2027 — 2031</span>
+        <h3>(Do budoucna) Univerzita Tomáše Bati ve Zlíně</h3>
+        <span class="t-org">Grafický design</span>
+        <p>Ateliér grafického designu, současné tendence v grafickém designu, písmo, typografie, realizační technologie oboru, klasické grafické techniky, vizuální kompozice, výuka kresby, teorie a metodologie designu, digitální prezentace a kompozice, současné výtvarné umění.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ZKUŠENOSTI -->
+<section id="zkusenosti" class="section experience reveal">
+  <div class="wrap">
+    <div class="kicker"><span class="dot" style="background:var(--blue)"></span>Zkušenosti</div>
+    <h2><span class="h2-mask"><span class="h2-in">Kde jsem to zkoušel v praxi</span></span></h2>
+    <div class="timeline">
+      <div class="t-item st">
+        <span class="t-period mono">2023 — doposud</span>
+        <h3>Grafický designér</h3>
+        <span class="t-org">Freelance</span>
+        <p>Samostatná spolupráce se známými — loga, plakáty, sociální sítě a jednoduché webové prezentace včetně kódování.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOVEDNOSTI -->
+<section id="dovednosti" class="section skills reveal">
+  <div class="wrap">
+    <div class="kicker"><span class="dot" style="background:var(--blue)"></span>Dovednosti</div>
+    <h2><span class="h2-mask"><span class="h2-in">Nástroje, se kterými pracuju</span></span></h2>
+    <div class="skills-groups">
+      <div class="skill-group">
+        <h3>Design nástroje</h3>
+        <div class="chip-grid">
+          <div class="chip st"><div><div class="name">Adobe Illustrator</div><div class="level mono">Expert</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span class="fill"></span><span class="fill"></span></div></div>
+          <div class="chip st"><div><div class="name">Adobe Photoshop</div><div class="level mono">Expert</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span class="fill"></span><span class="fill"></span></div></div>
+          <div class="chip st"><div><div class="name">Figma</div><div class="level mono">Pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span></div></div>
+          <div class="chip st"><div><div class="name">Adobe InDesign</div><div class="level mono">Pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span></div></div>
+          <div class="chip st"><div><div class="name">After Effects</div><div class="level mono">Středně pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span><span></span></div></div>
+          <div class="chip st"><div><div class="name">Procreate</div><div class="level mono">Středně pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span><span></span></div></div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Programování &amp; web</h3>
+        <div class="chip-grid">
+          <div class="chip st"><div><div class="name">HTML &amp; CSS</div><div class="level mono">Pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span></div></div>
+          <div class="chip st"><div><div class="name">JavaScript</div><div class="level mono">Středně pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span><span></span></div></div>
+          <div class="chip st"><div><div class="name">React</div><div class="level mono">Začátečník</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span></span><span></span><span></span></div></div>
+          <div class="chip st"><div><div class="name">Python</div><div class="level mono">Začátečník</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span></span><span></span><span></span></div></div>
+          <div class="chip st"><div><div class="name">WordPress</div><div class="level mono">Středně pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span><span></span></div></div>
+          <div class="chip st"><div><div class="name">Git</div><div class="level mono">Základy</div></div><div class="ticks5"><span class="fill"></span><span></span><span></span><span></span><span></span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TVORBA / GALERIE -->
+<section id="tvorba" class="section gallery reveal">
+  <div class="wrap">
+    <div class="kicker"><span class="dot" style="background:var(--yellow)"></span>Tvorba</div>
+    <h2><span class="h2-mask"><span class="h2-in">Výběr z poslední práce</span></span></h2>
+    <div class="gallery-grid">
+
+      <div class="tile st">
+        <span class="tag">Vizuální identita</span>
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="300" fill="#F2F1E9"/>
+          <circle cx="150" cy="130" r="86" fill="none" stroke="#15171A" stroke-width="2"/>
+          <circle cx="220" cy="150" r="60" fill="#FF4B2E" opacity="0.85"/>
+          <circle cx="260" cy="95" r="34" fill="none" stroke="#2647FF" stroke-width="2"/>
+          <circle cx="120" cy="210" r="16" fill="#FFC94A"/>
+        </svg>
+        <div class="info"><div class="ttl">Studio Lumen — značka</div><div class="sub mono">Logo · stacionář · 2024</div></div>
+      </div>
+
+      <div class="tile st">
+        <span class="tag">Ilustrace</span>
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="300" fill="#FFC94A"/>
+          <rect x="40" y="170" width="34" height="90" fill="#15171A"/>
+          <rect x="90" y="120" width="50" height="140" fill="#15171A"/>
+          <polygon points="115,80 90,120 140,120" fill="#15171A"/>
+          <rect x="160" y="150" width="40" height="110" fill="#15171A"/>
+          <rect x="215" y="100" width="60" height="160" fill="#15171A"/>
+          <rect x="232" y="70" width="26" height="30" fill="#15171A"/>
+          <rect x="290" y="180" width="36" height="80" fill="#15171A"/>
+          <circle cx="320" cy="60" r="22" fill="#F2F1E9"/>
+        </svg>
+        <div class="info"><div class="ttl">Městské siluety</div><div class="sub mono">Edit. ilustrace · 2024</div></div>
+      </div>
+
+      <div class="tile st">
+        <span class="tag">UI / UX</span>
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="300" fill="#2647FF"/>
+          <rect x="150" y="30" width="120" height="240" rx="14" fill="#F2F1E9"/>
+          <rect x="166" y="56" width="88" height="14" rx="3" fill="#15171A" opacity="0.85"/>
+          <rect x="166" y="84" width="60" height="8" rx="2" fill="#15171A" opacity="0.4"/>
+          <rect x="166" y="112" width="88" height="50" rx="4" fill="#FF4B2E"/>
+          <rect x="166" y="174" width="88" height="50" rx="4" fill="#FFC94A"/>
+          <rect x="166" y="236" width="88" height="20" rx="10" fill="#15171A"/>
+        </svg>
+        <div class="info"><div class="ttl">Donesto — appka pro rozvoz</div><div class="sub mono">UI design · 2023</div></div>
+      </div>
+
+      <div class="tile st">
+        <span class="tag">Plakát</span>
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="300" fill="#15171A"/>
+          <polygon points="0,300 160,40 230,300" fill="#FF4B2E"/>
+          <polygon points="180,300 300,90 400,300" fill="#F2F1E9" opacity="0.92"/>
+          <rect x="0" y="0" width="400" height="40" fill="#FFC94A"/>
+        </svg>
+        <div class="info"><div class="ttl">Hudební festival Sever</div><div class="sub mono">Plakát · tisk A1 · 2023</div></div>
+      </div>
+
+      <div class="tile st">
+        <span class="tag">Packaging</span>
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="300" fill="#F2F1E9"/>
+          <rect x="130" y="60" width="140" height="190" fill="#15171A"/>
+          <rect x="130" y="60" width="140" height="40" fill="#FF4B2E"/>
+          <path d="M150 130 q20 -30 40 0 q20 -30 40 0" fill="none" stroke="#FFC94A" stroke-width="3"/>
+          <path d="M150 165 q20 -30 40 0 q20 -30 40 0" fill="none" stroke="#FFC94A" stroke-width="3"/>
+        </svg>
+        <div class="info"><div class="ttl">Řada bylinných čajů</div><div class="sub mono">Obal · etiketa · 2022</div></div>
+      </div>
+
+      <div class="tile st">
+        <span class="tag">Webdesign</span>
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="300" fill="#F2F1E9"/>
+          <rect x="40" y="40" width="320" height="220" fill="#fff" stroke="#15171A" stroke-width="2"/>
+          <rect x="40" y="40" width="320" height="28" fill="#15171A"/>
+          <circle cx="56" cy="54" r="5" fill="#FF4B2E"/>
+          <circle cx="72" cy="54" r="5" fill="#FFC94A"/>
+          <circle cx="88" cy="54" r="5" fill="#2647FF"/>
+          <rect x="60" y="92" width="110" height="80" fill="#2647FF" opacity="0.85"/>
+          <rect x="184" y="92" width="150" height="20" fill="#15171A" opacity="0.85"/>
+          <rect x="184" y="120" width="150" height="10" fill="#15171A" opacity="0.4"/>
+          <rect x="184" y="138" width="100" height="10" fill="#15171A" opacity="0.4"/>
+          <rect x="60" y="190" width="274" height="48" fill="#FFC94A"/>
+        </svg>
+        <div class="info"><div class="ttl">E-shop s doplňky Ráj</div><div class="sub mono">Webdesign · 2022</div></div>
+      </div>
+
+    </div>
+    <p class="gallery-note"></p>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt" class="section contact reveal">
+  <div class="wrap">
+    <div class="kicker"><span class="dot"></span>Kontakt</div>
+    <h2><span class="h2-mask"><span class="h2-in">Máš pro mě projekt?</span></span></h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p class="st">Ozvi se s čímkoliv od jednoho loga až po kompletní vizuální identitu. Obvykle odpovídám do dvou pracovních dnů.</p>
+        <div class="c-line st"><span class="l mono">E-mail</span><a href="mailto:tomas210408@gmail.com">tomas210408@gmail.com</a></div>
+        <div class="c-line st"><span class="l mono">Telefon</span><a href="tel:+420737970113">+420 737 970 113</a></div>
+        <div class="c-line st"><span class="l mono">Lokace</span><span>Zlín, Česká republika</span></div>
+        <div class="social-row st">
+          <a href="#">Behance</a>
+          <a href="#">Dribbble</a>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+      <form id="contactForm">
+        <div class="field st"><label for="jmeno">Jméno</label><input id="jmeno" name="jmeno" type="text" placeholder="Jak se jmenuješ" required></div>
+        <div class="field st"><label for="email">E-mail</label><input id="email" name="email" type="email" placeholder="tvuj@email.cz" required></div>
+        <div class="field st"><label for="zprava">Zpráva</label><textarea id="zprava" name="zprava" rows="4" placeholder="Pár slov o projektu..." required></textarea></div>
+        <div class="form-foot st">
+          <button type="submit" class="btn btn-light">Odeslat zprávu <span class="arrow">→</span></button>
+          <span class="form-status" id="formStatus"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="status-bar">
+  <span>© 2026 Tomáš Bobál · Grafika &amp; trochu kódu</span>
+  <a href="#uvod">Zpět nahoru ↑</a>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
