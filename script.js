@@ -105,3 +105,87 @@ form?.addEventListener('submit', function(e){
   window.location.href = `mailto:tomas210408@gmail.com?subject=${subject}&body=${body}`;
   status.textContent = 'Otevírám e-mailový klient…';
 });
+
+// Lightbox pro galerii tvorby (karta může obsahovat více fotek)
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = lightbox?.querySelector('img');
+const lightboxCounter = lightbox?.querySelector('.lightbox-counter');
+let lbImages = [], lbIndex = 0, lbAlt = '';
+function showLightbox(){
+  if(lightbox.classList.contains('open') && !reduceMotion){
+    lightboxImg.classList.add('swap');
+    setTimeout(()=>{ lightboxImg.src = lbImages[lbIndex]; lightboxImg.classList.remove('swap'); }, 150);
+  } else {
+    lightboxImg.src = lbImages[lbIndex];
+  }
+  lightboxImg.alt = lbAlt;
+  lightboxCounter.textContent = (lbIndex + 1) + ' / ' + lbImages.length;
+}
+function stepLightbox(d){
+  if(lbImages.length < 2) return;
+  lbIndex = (lbIndex + d + lbImages.length) % lbImages.length;
+  showLightbox();
+}
+function closeLightbox(){ lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); }
+document.querySelectorAll('.tile[data-gallery]').forEach(tile=>{
+  tile.addEventListener('click', ()=>{
+    lbImages = tile.dataset.gallery.split(',');
+    lbIndex = 0;
+    lbAlt = tile.querySelector('img').alt;
+    lightbox.classList.toggle('single', lbImages.length < 2);
+    showLightbox();
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden','false');
+  });
+});
+lightbox?.querySelector('.prev').addEventListener('click', e=>{ e.stopPropagation(); stepLightbox(-1); });
+lightbox?.querySelector('.next').addEventListener('click', e=>{ e.stopPropagation(); stepLightbox(1); });
+lightboxImg?.addEventListener('click', e=>{ e.stopPropagation(); stepLightbox(1); });
+lightbox?.addEventListener('click', closeLightbox);
+document.addEventListener('keydown', e=>{
+  if(!lightbox.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowRight') stepLightbox(1);
+  if(e.key === 'ArrowLeft') stepLightbox(-1);
+});
+
+// Weby: živý náhled (iframe zmenšený na šířku karty) nebo screenshot z data-shot
+document.querySelectorAll('.site-card').forEach(card=>{
+  const url = card.dataset.url;
+  const shot = card.dataset.shot;
+  const view = card.querySelector('.browser-view');
+  const link = card.querySelector('.site-link');
+  if(!url) { link.setAttribute('aria-disabled','true'); return; }
+  link.href = url;
+  card.querySelector('.b-url').textContent = url.replace(/^https?:\/\//,'').replace(/\/$/,'');
+  view.querySelector('.site-placeholder')?.remove();
+  if(shot){
+    view.innerHTML = '<img src="' + shot + '" alt="Náhled webu" loading="lazy">';
+    return;
+  }
+  const frame = document.createElement('iframe');
+  frame.src = url;
+  frame.loading = 'lazy';
+  frame.tabIndex = -1;
+  frame.title = 'Náhled webu';
+  view.appendChild(frame);
+  const fit = ()=> frame.style.transform = 'scale(' + (view.clientWidth / 1440) + ')';
+  new ResizeObserver(fit).observe(view);
+  fit();
+});
+
+// Střídající se slovo v nadpisu
+const heroWord = document.getElementById('heroWord');
+if(heroWord && !reduceMotion){
+  const words = heroWord.querySelectorAll('.w');
+  let w = 0;
+  setTimeout(()=> setInterval(()=>{
+    const prev = words[w];
+    w = (w + 1) % words.length;
+    const next = words[w];
+    prev.classList.remove('is-on', 'redraw');
+    prev.classList.add('is-out');
+    setTimeout(()=> prev.classList.remove('is-out'), 450);
+    next.classList.add('is-on', 'redraw');
+  }, 2800), 2200);
+}
