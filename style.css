@@ -29,7 +29,13 @@ body{
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
-  transition:background-color .8s var(--ease), color .8s var(--ease);
+  transition:color .35s ease;
+}
+/* pozadí se prolíná na vlastní pevné vrstvě (levnější než přebarvovat celou stránku) */
+body::before{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:var(--bg);
+  transition:background-color .8s var(--ease);
 }
 img{display:block; max-width:100%; height:auto;}
 a{color:inherit;}
@@ -378,7 +384,8 @@ button{font:inherit; color:inherit;}
 
 /* ---------- běžící pás oborů ---------- */
 .band{overflow:hidden; background:var(--fg); color:var(--bg); transition:background-color .8s, color .8s;}
-.band-track{display:flex; width:max-content; animation:band 38s linear infinite;}
+.band-track{display:flex; width:max-content; animation:band 38s linear infinite; will-change:transform;}
+.band.paused .band-track{animation-play-state:paused;}
 .band span{
   display:flex; align-items:center; white-space:nowrap;
   padding:20px 0 20px 34px;
@@ -543,6 +550,8 @@ body.in-projects .pnav{opacity:1; transform:translate(0,-50%); pointer-events:au
 
   /* horní hlavička: jen jméno, schová se spolu s lištou */
   .nav{display:none;}
+  .top.scrolled{backdrop-filter:none; -webkit-backdrop-filter:none; background:color-mix(in srgb, var(--bg) 96%, transparent);}
+  .tabbar{backdrop-filter:none; -webkit-backdrop-filter:none; background:color-mix(in srgb, var(--fg) 96%, transparent);}
   body{padding-bottom:calc(96px + env(safe-area-inset-bottom));}
   .foot{padding-bottom:20px;}
 }

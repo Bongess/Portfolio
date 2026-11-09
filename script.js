@@ -128,6 +128,32 @@ window.addEventListener('pointermove', e => {
 window.addEventListener('scroll', () => { if (usingMouse) requestAnimationFrame(updateCursor); }, {passive:true});
 document.addEventListener('mouseleave', () => { cursor.classList.remove('on'); document.body.classList.remove('cursor-hidden'); });
 
+// ---------- Běžící pás oborů: pauza, když není na obrazovce ----------
+const band = document.querySelector('.band');
+if (band) new IntersectionObserver(([e]) => band.classList.toggle('paused', !e.isIntersecting)).observe(band);
+
+// ---------- Plynulé skoky na sekce ----------
+// Dlouhý plynulý posun přes celou stránku na mobilu „seká“ (musí se cestou
+// vykreslit všechny obrázky). U vzdálených cílů proto skočíme skoro k cíli
+// okamžitě a jen poslední kousek dojedeme plynule.
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey) return;
+  const id = a.getAttribute('href');
+  const target = id.length > 1 && document.querySelector(id);
+  if (!target) return;
+  e.preventDefault();
+  const top = target.getBoundingClientRect().top + window.scrollY;
+  const dist = top - window.scrollY;
+  const near = window.innerHeight * 0.9;
+  const glide = () => window.scrollTo({top, behavior: reduceMotion ? 'instant' : 'smooth'});
+  if (Math.abs(dist) > near * 1.6){
+    window.scrollTo({top: top - Math.sign(dist) * near, behavior: 'instant'});
+    setTimeout(glide, 30); // dojezd až po vykreslení skoku
+  } else glide();
+  history.replaceState(null, '', id);
+});
+
 // ---------- Lightbox ----------
 const lb = document.getElementById('lightbox');
 const lbImg = lb.querySelector('img');
@@ -189,10 +215,14 @@ document.querySelectorAll('.p-media[data-gallery]').forEach(media => {
 // Web se načte do iframe zmenšeného na šířku karty. Po najetí myší jde web
 // uvnitř karty scrollovat i proklikat. Pod ním leží screenshot, takže karta
 // nikdy není prázdná, i kdyby se živý web nenačetl.
+// Na dotykových zařízeních se živé weby nenačítají vůbec (šetří data i výkon),
+// zůstane jen screenshot a tlačítko „Otevřít web“.
+const canLivePreview = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 document.querySelectorAll('.site[data-url]').forEach(card => {
   const url = card.dataset.url;
   const view = card.querySelector('.browser-view');
   card.querySelector('.b-url').textContent = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  if (!canLivePreview) return;
   const frame = document.createElement('iframe');
   frame.src = url;
   frame.loading = 'lazy';
