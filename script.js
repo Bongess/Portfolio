@@ -1,191 +1,260 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const root = document.documentElement;
+root.classList.add('js');
 
-// Indexy pro postupné objevování (.st) a výplň ukazatelů dovedností
-document.querySelectorAll('.reveal').forEach(sec => {
-  const parents = new Map();
-  sec.querySelectorAll('.st').forEach(el => {
-    const p = el.parentElement;
-    const n = parents.get(p) || 0;
-    el.style.setProperty('--i', n);
-    parents.set(p, n + 1);
-  });
-});
-document.querySelectorAll('.ticks5 span').forEach((s, k) => s.style.setProperty('--n', k % 5));
+// Hlavička: podklad až po odscrollování
+const header = document.querySelector('.top');
+const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 20);
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
 
-// Odhalení při scrollu + počítání čísel
-function countUp(el){
-  const target = +el.dataset.count, suffix = el.dataset.suffix || '';
-  if (reduceMotion) { el.textContent = target + suffix; return; }
-  const dur = 1400, start = performance.now();
-  (function tick(now){
-    const t = Math.min((now - start) / dur, 1);
-    const eased = 1 - Math.pow(1 - t, 3);
-    el.textContent = Math.round(target * eased) + (t === 1 ? suffix : '');
-    if (t < 1) requestAnimationFrame(tick);
-  })(start);
+// ---------- Přebarvování webu podle sekce ----------
+// Každá sekce má v HTML data-bg / data-fg / data-accent.
+const themed = document.querySelectorAll('[data-bg]');
+const pnavLinks = document.querySelectorAll('.pnav a');
+
+// ---------- Mobilní lišta dole ----------
+const tabbar = document.getElementById('tabbar');
+const tabLinks = tabbar.querySelectorAll('a[data-tab]');
+const tabPill = tabbar.querySelector('.tab-pill');
+// která položka lišty patří ke které sekci
+function tabFor(el){
+  if (el.classList.contains('project') || el.id === 'postup') return 'prace';
+  if (el.id === 'uvod') return null;
+  return el.id;
 }
-const reveals = document.querySelectorAll('.reveal');
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('in');
-      e.target.querySelectorAll('[data-count]').forEach(countUp);
-      io.unobserve(e.target);
-    }
+function setTab(id){
+  let active = null;
+  tabLinks.forEach(a => {
+    const on = a.dataset.tab === id;
+    a.classList.toggle('active', on);
+    if (on){ active = a; a.setAttribute('aria-current', 'true'); } else a.removeAttribute('aria-current');
   });
-},{threshold:0.12});
-reveals.forEach(el=>io.observe(el));
-
-// Aktivní vrstva (sidebar + štítek na pravítku)
-const sections = document.querySelectorAll('main .section');
-const layerItems = document.querySelectorAll('.layer-item');
-const rulerActive = document.getElementById('rulerActive');
-const names = {uvod:'ÚVOD','o-mne':'O MNĚ',vzdelani:'VZDĚLÁNÍ',zkusenosti:'ZKUŠENOSTI',dovednosti:'DOVEDNOSTI',tvorba:'TVORBA',kontakt:'KONTAKT'};
-const sectionObserver = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      const id = entry.target.id;
-      layerItems.forEach(li=>li.classList.toggle('active', li.dataset.target===id));
-      if(rulerActive && names[id]) rulerActive.textContent = names[id];
-    }
-  });
-},{rootMargin:'-45% 0px -45% 0px'});
-sections.forEach(s=>sectionObserver.observe(s));
-
-// Ukazatel postupu scrollu + "playhead" na pravítku
-const progress = document.getElementById('progress');
-const playhead = document.getElementById('playhead');
-let ticking = false;
-function updateProgress(){
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
-  progress.style.transform = 'scaleX(' + p + ')';
-  playhead.style.left = (p * 100) + '%';
-  ticking = false;
-}
-window.addEventListener('scroll', ()=>{ if(!ticking){ ticking = true; requestAnimationFrame(updateProgress); } }, {passive:true});
-window.addEventListener('resize', updateProgress);
-updateProgress();
-
-// Jemný parallax tvarů v heru
-if(!reduceMotion){
-  const shapes = document.querySelectorAll('.shape');
-  window.addEventListener('scroll', ()=>{
-    const y = window.scrollY;
-    if(y > 900) return;
-    shapes.forEach((s, k)=> s.style.transform = 'translateY(' + (y * (0.08 + k * 0.05)) + 'px)');
-  }, {passive:true});
-}
-
-// Mobilní panel vrstev
-const toggleBtn = document.getElementById('layersToggle');
-const overlayBg = document.getElementById('overlayBg');
-function closePanel(){ document.body.classList.remove('panel-open'); }
-toggleBtn?.addEventListener('click', ()=>document.body.classList.toggle('panel-open'));
-overlayBg?.addEventListener('click', closePanel);
-layerItems.forEach(li=>li.addEventListener('click', closePanel));
-
-// Kontaktní formulář -> mailto (funguje bez backendu).
-// Chceš odesílat formulář bez otevírání e-mailového klienta?
-// Zaregistruj se zdarma na formspree.io a nahraď blok níže za fetch na svůj endpoint.
-const form = document.getElementById('contactForm');
-const status = document.getElementById('formStatus');
-form?.addEventListener('submit', function(e){
-  e.preventDefault();
-  const jmeno = document.getElementById('jmeno').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const zprava = document.getElementById('zprava').value.trim();
-  status.classList.remove('show'); void status.offsetWidth; status.classList.add('show');
-  if(!jmeno || !email || !zprava){
-    status.textContent = 'Vyplň prosím všechna pole.';
-    return;
+  tabbar.classList.toggle('has-active', !!active);
+  if (active){
+    tabPill.style.width = active.offsetWidth + 'px';
+    tabPill.style.transform = 'translateX(' + active.offsetLeft + 'px)';
   }
-  const subject = encodeURIComponent('Poptávka z portfolia od ' + jmeno);
-  const body = encodeURIComponent(zprava + '\n\n— ' + jmeno + ' (' + email + ')');
-  window.location.href = `mailto:tomas210408@gmail.com?subject=${subject}&body=${body}`;
-  status.textContent = 'Otevírám e-mailový klient…';
-});
+}
+window.addEventListener('resize', () => setTab(tabbar.querySelector('a.active')?.dataset.tab));
 
-// Lightbox pro galerii tvorby (karta může obsahovat více fotek)
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = lightbox?.querySelector('img');
-const lightboxCounter = lightbox?.querySelector('.lightbox-counter');
-let lbImages = [], lbIndex = 0, lbAlt = '';
-function showLightbox(){
-  if(lightbox.classList.contains('open') && !reduceMotion){
-    lightboxImg.classList.add('swap');
-    setTimeout(()=>{ lightboxImg.src = lbImages[lbIndex]; lightboxImg.classList.remove('swap'); }, 150);
-  } else {
-    lightboxImg.src = lbImages[lbIndex];
+// při scrollu dolů se lišta i hlavička schovají, při scrollu nahoru hned vrátí
+let lastY = window.scrollY;
+// po kliknutí na položku nechat lištu viditelnou, dokud stránka nedojede k cíli
+let navTarget = null, navTimeout = 0;
+function endNav(){ navTarget = null; clearTimeout(navTimeout); lastY = window.scrollY; }
+tabLinks.forEach(a => a.addEventListener('click', () => {
+  navTarget = document.querySelector(a.getAttribute('href'));
+  clearTimeout(navTimeout);
+  navTimeout = setTimeout(endNav, 4000); // pojistka
+}));
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (navTarget){
+    if (Math.abs(navTarget.getBoundingClientRect().top) < 4) endNav(); // dojeli jsme
+    lastY = y; return;
   }
-  lightboxImg.alt = lbAlt;
-  lightboxCounter.textContent = (lbIndex + 1) + ' / ' + lbImages.length;
+  const nearBottom = y + window.innerHeight > document.documentElement.scrollHeight - 80;
+  const hide = y > lastY && y > 160 && !nearBottom;
+  if (Math.abs(y - lastY) > 6){
+    tabbar.classList.toggle('hide', hide);
+    header.classList.toggle('hide', hide);
+    lastY = y;
+  }
+}, {passive:true});
+function applyTheme(el){
+  root.style.setProperty('--bg', el.dataset.bg);
+  root.style.setProperty('--fg', el.dataset.fg);
+  root.style.setProperty('--accent', el.dataset.accent);
+  // boční navigace projektů: zobrazit jen mezi projekty a zvýraznit aktuální
+  document.body.classList.toggle('in-projects', el.classList.contains('project'));
+  pnavLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + el.id));
+  setTab(tabFor(el));
 }
-function stepLightbox(d){
-  if(lbImages.length < 2) return;
-  lbIndex = (lbIndex + d + lbImages.length) % lbImages.length;
-  showLightbox();
-}
-function closeLightbox(){ lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); }
-document.querySelectorAll('.tile[data-gallery]').forEach(tile=>{
-  tile.addEventListener('click', ()=>{
-    lbImages = tile.dataset.gallery.split(',');
-    lbIndex = 0;
-    lbAlt = tile.querySelector('img').alt;
-    lightbox.classList.toggle('single', lbImages.length < 2);
-    showLightbox();
-    lightbox.classList.add('open');
-    lightbox.setAttribute('aria-hidden','false');
+const themeObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) applyTheme(e.target); });
+}, {rootMargin:'-50% 0px -50% 0px'});
+themed.forEach(s => themeObserver.observe(s));
+
+// Projekty vjedou, když se poprvé objeví
+const seenObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting){ e.target.classList.add('seen'); seenObserver.unobserve(e.target); }
   });
-});
-lightbox?.querySelector('.prev').addEventListener('click', e=>{ e.stopPropagation(); stepLightbox(-1); });
-lightbox?.querySelector('.next').addEventListener('click', e=>{ e.stopPropagation(); stepLightbox(1); });
-lightboxImg?.addEventListener('click', e=>{ e.stopPropagation(); stepLightbox(1); });
-lightbox?.addEventListener('click', closeLightbox);
-document.addEventListener('keydown', e=>{
-  if(!lightbox.classList.contains('open')) return;
-  if(e.key === 'Escape') closeLightbox();
-  if(e.key === 'ArrowRight') stepLightbox(1);
-  if(e.key === 'ArrowLeft') stepLightbox(-1);
+}, {threshold:.15});
+document.querySelectorAll('.project').forEach(p => seenObserver.observe(p));
+
+// ---------- Kurzor „Zobrazit“ nad obrázky projektů ----------
+// Řídí se skutečnou myší (ne nastavením prohlížeče) a kontroluje se i při
+// scrollování: Safari jinak nepozná, že pod stojící myší „přijel“ obrázek.
+const cursor = document.getElementById('cursor');
+let mouseX = -1, mouseY = -1, usingMouse = false;
+
+function updateCursor(){
+  if (!usingMouse || !lb.hidden){ cursor.classList.remove('on'); document.body.classList.remove('cursor-hidden'); return; }
+  const el = document.elementFromPoint(mouseX, mouseY);
+  const over = !!(el && el.closest('.m-main'));
+  cursor.classList.toggle('on', over);
+  document.body.classList.toggle('cursor-hidden', over);
+}
+window.addEventListener('pointermove', e => {
+  usingMouse = e.pointerType === 'mouse';
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top = mouseY + 'px';
+  updateCursor();
+}, {passive:true});
+window.addEventListener('scroll', () => { if (usingMouse) requestAnimationFrame(updateCursor); }, {passive:true});
+document.addEventListener('mouseleave', () => { cursor.classList.remove('on'); document.body.classList.remove('cursor-hidden'); });
+
+// ---------- Lightbox ----------
+const lb = document.getElementById('lightbox');
+const lbImg = lb.querySelector('img');
+const lbTitle = lb.querySelector('.lb-title');
+const lbCount = lb.querySelector('.lb-count');
+let images = [], index = 0, opener = null;
+
+function render(animate){
+  const apply = () => {
+    lbImg.src = images[index];
+    lbCount.textContent = images.length > 1 ? (index + 1) + ' / ' + images.length : '';
+  };
+  if (animate && !reduceMotion){
+    lbImg.classList.add('swap');
+    setTimeout(() => { apply(); lbImg.classList.remove('swap'); }, 150);
+  } else apply();
+}
+function openLightbox(list, start, title, from){
+  images = list; index = start; opener = from;
+  lbTitle.textContent = title;
+  lbImg.alt = title;
+  lb.classList.toggle('single', images.length < 2);
+  render(false);
+  lb.hidden = false;
+  cursor.classList.remove('on');
+  document.body.classList.remove('cursor-hidden');
+  document.body.style.overflow = 'hidden';
+  lb.querySelector('.lb-close').focus();
+}
+function closeLightbox(){
+  lb.hidden = true;
+  document.body.style.overflow = '';
+  opener?.focus();
+}
+function step(d){
+  if (images.length < 2) return;
+  index = (index + d + images.length) % images.length;
+  render(true);
+}
+lb.querySelector('.prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
+lb.querySelector('.next').addEventListener('click', e => { e.stopPropagation(); step(1); });
+lb.querySelector('.lb-close').addEventListener('click', closeLightbox);
+lbImg.addEventListener('click', e => { e.stopPropagation(); step(1); });
+lb.addEventListener('click', e => { if (e.target === lb || e.target.tagName === 'FIGURE') closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (lb.hidden) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') step(1);
+  if (e.key === 'ArrowLeft') step(-1);
 });
 
-// Weby: živý náhled (iframe zmenšený na šířku karty) nebo screenshot z data-shot
-document.querySelectorAll('.site-card').forEach(card=>{
+document.querySelectorAll('.p-media[data-gallery]').forEach(media => {
+  const list = media.dataset.gallery.split(',');
+  media.querySelectorAll('button[data-index]').forEach(btn =>
+    btn.addEventListener('click', () => openLightbox(list, +btn.dataset.index, media.dataset.title, btn)));
+});
+
+// ---------- Weby: živý náhled, kterým jde scrollovat ----------
+// Web se načte do iframe zmenšeného na šířku karty. Po najetí myší jde web
+// uvnitř karty scrollovat i proklikat. Pod ním leží screenshot, takže karta
+// nikdy není prázdná, i kdyby se živý web nenačetl.
+document.querySelectorAll('.site[data-url]').forEach(card => {
   const url = card.dataset.url;
-  const shot = card.dataset.shot;
   const view = card.querySelector('.browser-view');
-  const link = card.querySelector('.site-link');
-  if(!url) { link.setAttribute('aria-disabled','true'); return; }
-  link.href = url;
-  card.querySelector('.b-url').textContent = url.replace(/^https?:\/\//,'').replace(/\/$/,'');
-  view.querySelector('.site-placeholder')?.remove();
-  if(shot){
-    view.innerHTML = '<img src="' + shot + '" alt="Náhled webu" loading="lazy">';
-    return;
-  }
+  card.querySelector('.b-url').textContent = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
   const frame = document.createElement('iframe');
   frame.src = url;
   frame.loading = 'lazy';
-  frame.tabIndex = -1;
-  frame.title = 'Náhled webu';
+  frame.title = 'Živý náhled webu ' + url.replace(/^https?:\/\//, '');
   view.appendChild(frame);
-  const fit = ()=> frame.style.transform = 'scale(' + (view.clientWidth / 1440) + ')';
+  const fit = () => {
+    const scale = view.clientWidth / 1440;
+    frame.style.transform = 'scale(' + scale + ')';
+    frame.style.height = Math.max(900, view.clientHeight / scale) + 'px';
+  };
   new ResizeObserver(fit).observe(view);
   fit();
 });
 
-// Střídající se slovo v nadpisu
-const heroWord = document.getElementById('heroWord');
-if(heroWord && !reduceMotion){
-  const words = heroWord.querySelectorAll('.w');
-  let w = 0;
-  setTimeout(()=> setInterval(()=>{
-    const prev = words[w];
-    w = (w + 1) % words.length;
-    const next = words[w];
-    prev.classList.remove('is-on', 'redraw');
-    prev.classList.add('is-out');
-    setTimeout(()=> prev.classList.remove('is-out'), 450);
-    next.classList.add('is-on', 'redraw');
-  }, 2800), 2200);
-}
+// ---------- Kopírování e-mailu / telefonu ----------
+document.querySelectorAll('.cc-btn.copy').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    try{
+      await navigator.clipboard.writeText(btn.dataset.copy);
+      btn.textContent = 'Zkopírováno';
+    }catch{
+      btn.textContent = 'Nejde kopírovat';
+    }
+    btn.classList.add('done');
+    setTimeout(() => { btn.textContent = 'Kopírovat'; btn.classList.remove('done'); }, 1800);
+  });
+});
+
+// ---------- Kontaktní formulář: odesílá e-mail přímo z webu ----------
+// Používá službu FormSubmit (formsubmit.co), zdarma a bez registrace.
+// DŮLEŽITÉ: po úplně první odeslané zprávě přijde na e-mail níže aktivační
+// odkaz od FormSubmit. Dokud ho nepotvrdíš, zprávy se nedoručují.
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/tomas210408@gmail.com';
+
+const form = document.getElementById('contactForm');
+const formStatus = document.getElementById('formStatus');
+const submitBtn = form.querySelector('button[type="submit"]');
+const setStatus = (text, kind) => {
+  formStatus.textContent = text;
+  formStatus.className = 'form-status' + (kind ? ' ' + kind : '');
+};
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const jmeno = form.jmeno.value.trim();
+  const email = form.email.value.trim();
+  const zprava = form.zprava.value.trim();
+  if (!jmeno || !email || !zprava){
+    setStatus('Vyplň jméno, e-mail i zprávu.', 'err');
+    return;
+  }
+  if (!form.email.checkValidity()){
+    setStatus('Zkontroluj prosím e-mailovou adresu.', 'err');
+    form.email.focus();
+    return;
+  }
+  if (form._honey.value) return; // vyplnil to robot
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Odesílám…';
+  setStatus('');
+  try{
+    const res = await fetch(FORM_ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+      body:JSON.stringify({
+        name:jmeno,
+        email:email,
+        message:zprava,
+        _subject:'Nová zpráva z portfolia od ' + jmeno,
+        _template:'table',
+        _captcha:'false'
+      })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || data.success === 'false' || data.success === false) throw new Error(data.message || res.status);
+    form.reset();
+    setStatus('Díky, zpráva je odeslaná. Ozvu se co nejdřív.', 'ok');
+    submitBtn.textContent = 'Odesláno';
+    setTimeout(() => { submitBtn.textContent = 'Odeslat zprávu'; submitBtn.disabled = false; }, 4000);
+  }catch(err){
+    setStatus('Zprávu se nepodařilo odeslat. Zkus to znovu, nebo napiš přímo na tomas210408@gmail.com.', 'err');
+    submitBtn.textContent = 'Odeslat zprávu';
+    submitBtn.disabled = false;
+  }
+});

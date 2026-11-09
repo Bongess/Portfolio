@@ -2,318 +2,457 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tomáš Bobál — Grafický designér</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tomáš Bobál — grafický design</title>
+<meta name="description" content="Portfolio Tomáše Bobála, studenta grafického designu ze Zlína: vizuální identity, plakáty, obaly a weby.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300..900&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=38">
 </head>
 <body>
 
-<div class="ruler" aria-hidden="true">
-  <span class="label-left mono">PLÁTNO — PORTFOLIO.HTML</span>
-  <div class="ticks"><div class="progress" id="progress"></div><div class="playhead" id="playhead"></div></div>
-  <span class="label-right mono" id="rulerActive">ÚVOD</span>
-</div>
+<a class="skip" href="#prace">Přeskočit na práce</a>
 
-<button class="layers-toggle" id="layersToggle">Vrstvy ▾</button>
-<div class="layers-overlay-bg" id="overlayBg"></div>
-
-<nav class="layers-panel" id="layersPanel">
-  <div class="panel-title">Vrstvy dokumentu</div>
-  <a class="layer-item" data-target="uvod" href="#uvod"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L01</span><span class="swatch" style="background:var(--coral)"></span>Úvod</a>
-  <a class="layer-item" data-target="o-mne" href="#o-mne"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L02</span><span class="swatch" style="background:var(--blue)"></span>O mně</a>
-  <a class="layer-item" data-target="vzdelani" href="#vzdelani"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L03</span><span class="swatch" style="background:var(--yellow)"></span>Vzdělání</a>
-  <a class="layer-item" data-target="zkusenosti" href="#zkusenosti"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L04</span><span class="swatch" style="background:var(--coral)"></span>Zkušenosti</a>
-  <a class="layer-item" data-target="dovednosti" href="#dovednosti"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L05</span><span class="swatch" style="background:var(--blue)"></span>Dovednosti</a>
-  <a class="layer-item" data-target="tvorba" href="#tvorba"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L06</span><span class="swatch" style="background:var(--yellow)"></span>Tvorba</a>
-  <a class="layer-item" data-target="kontakt" href="#kontakt"><svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg><span class="idx">L07</span><span class="swatch" style="background:var(--ink)"></span>Kontakt</a>
-</nav>
+<header class="top">
+  <a class="brand" href="#uvod">Tomáš Bobál</a>
+  <nav class="nav" aria-label="Hlavní navigace">
+    <a href="#co-delam">Co dělám</a>
+    <a href="#prace">Práce</a>
+    <a href="#weby">Weby</a>
+    <a href="#o-mne">O mně</a>
+    <a class="nav-cta" href="#kontakt">Napsat mi</a>
+  </nav>
+</header>
 
 <main>
 
 <!-- ÚVOD -->
-<section id="uvod" class="section hero">
-  <div class="hero-shapes" aria-hidden="true">
-    <div class="shape s1"><i></i></div>
-    <div class="shape s2"><i></i></div>
-    <div class="shape s3"><i></i></div>
-  </div>
-  <div class="wrap">
-    <div class="hero-eyebrow fade-up" style="--d:.1s">Grafický designér &amp; trochu vývojář</div>
-    <h1>
-      <span class="line"><span>Tomáš Bobál</span></span>
-      <span class="line"><span>tvořím <span class="rotator" id="heroWord"><span class="w is-on"><span class="mark">vizuální identity</span>.</span><span class="w"><span class="mark">plakáty</span>.</span><span class="w"><span class="mark">obaly</span>.</span><span class="w"><span class="mark">weby</span>.</span></span></span></span>
+<section id="uvod" class="hero" data-bg="#EEF0F4" data-fg="#121318" data-accent="#4B3BFF">
+  <div class="hero-top">
+    <p class="hero-role">Student grafického designu, Zlín</p>
+    <h1 class="hero-name" aria-label="Tomáš Bobál">
+      <span class="ln"><span>Tomáš</span></span>
+      <span class="ln"><span>Bobál</span></span>
     </h1>
-    <p class="hero-sub fade-up" style="--d:.8s">Poslední 3 roky proměňuju nápady v plakáty, loga, obaly a uživatelská rozhraní. Pár věcí si přitom umím i sám naprogramovat — od jednoduchého webu po interaktivní detail.</p>
-    <div class="hero-cta fade-up" style="--d:1s">
-      <a href="#tvorba" class="btn btn-solid">Zobrazit tvorbu <span class="arrow">→</span></a>
-      <a href="#kontakt" class="btn btn-outline">Napsat mi</a>
-    </div>
-    <div class="swatch-row" aria-hidden="true">
-      <div class="swatch-chip" style="--i:0"><div class="sq" style="background:var(--coral)"></div><span class="code mono">C0 M82 Y82 K0</span></div>
-      <div class="swatch-chip" style="--i:1"><div class="sq" style="background:var(--blue)"></div><span class="code mono">C90 M70 Y0 K0</span></div>
-      <div class="swatch-chip" style="--i:2"><div class="sq" style="background:var(--yellow)"></div><span class="code mono">C0 M20 Y75 K0</span></div>
-      <div class="swatch-chip" style="--i:3"><div class="sq" style="background:var(--ink)"></div><span class="code mono">C0 M0 Y0 K92</span></div>
+    <div class="hero-side">
+      <p>Navrhuju plakáty, vizuální identity, obaly i weby a ty si rovnou nakóduju. Každý projekt beru jako šanci zkusit nový styl.</p>
+      <a href="#prace" class="btn">Prohlédnout práce</a>
     </div>
   </div>
+
+  <div class="palette" aria-label="Rychlý přehled projektů">
+    <a class="swatch" href="#p-kaves"    style="--c:#DBC1AC; --t:#4E2920; --i:0"><img src="images/web/kaves-mikina1.jpg" alt="" loading="eager"><span class="sw-name">Káves</span><span class="sw-kind">Identita</span></a>
+    <a class="swatch" href="#p-festival" style="--c:#3C3738; --t:#F3E8F1; --i:1"><img src="images/web/festival-plakat.jpg" alt=""><span class="sw-name">Zrće Festival</span><span class="sw-kind">Plakát</span></a>
+    <a class="swatch" href="#p-cloud"    style="--c:#97B7CA; --t:#1E1A18; --i:2"><img src="images/web/pivo1.jpg" alt=""><span class="sw-name">Cloud</span><span class="sw-kind">Obal</span></a>
+    <a class="swatch" href="#p-pepper"   style="--c:#D9A92D; --t:#141414; --i:3"><img src="images/web/pepper-king-combo.jpg" alt=""><span class="sw-name">Pepper King</span><span class="sw-kind">Leták</span></a>
+    <a class="swatch" href="#p-nosorozec" style="--c:#EA9052; --t:#2B2321; --i:4"><img src="images/web/infografika-nosorozec.jpg" alt=""><span class="sw-name">Nosorožec</span><span class="sw-kind">Infografika</span></a>
+    <a class="swatch" href="#p-halloween" style="--c:#2B5697; --t:#FFF3D6; --i:5"><img src="images/web/halloween-plakat.jpg?v=2" alt=""><span class="sw-name">Halloween</span><span class="sw-kind">Plakát</span></a>
+  </div>
+  <p class="palette-note">Šest projektů, šest různých stylů. Najeď na barvu a uvidíš projekt, kliknutím na něj skočíš.</p>
 </section>
 
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <div class="marquee-group"><span>Vizuální identita</span><i style="color:var(--coral)">✦</i><span>Plakáty</span><i style="color:var(--yellow)">✦</i><span>Packaging</span><i style="color:var(--blue)">✦</i><span>Webdesign</span><i style="color:var(--coral)">✦</i><span>Infografiky</span><i style="color:var(--yellow)">✦</i><span>Typografie</span><i style="color:var(--blue)">✦</i><span>Ilustrace</span><i style="color:var(--coral)">✦</i></div>
-    <div class="marquee-group"><span>Vizuální identita</span><i style="color:var(--coral)">✦</i><span>Plakáty</span><i style="color:var(--yellow)">✦</i><span>Packaging</span><i style="color:var(--blue)">✦</i><span>Webdesign</span><i style="color:var(--coral)">✦</i><span>Infografiky</span><i style="color:var(--yellow)">✦</i><span>Typografie</span><i style="color:var(--blue)">✦</i><span>Ilustrace</span><i style="color:var(--coral)">✦</i></div>
+<div class="band" aria-hidden="true">
+  <div class="band-track">
+    <span>Vizuální identity</span><span>Plakáty</span><span>Obaly</span><span>Ilustrace</span><span>Infografiky</span><span>Weby</span><span>Typografie</span>
+    <span>Vizuální identity</span><span>Plakáty</span><span>Obaly</span><span>Ilustrace</span><span>Infografiky</span><span>Weby</span><span>Typografie</span>
   </div>
 </div>
 
+<!-- CO DĚLÁM -->
+<section id="co-delam" class="block" data-bg="#EEF0F4" data-fg="#121318" data-accent="#4B3BFF">
+  <div class="block-head">
+    <h2>Co dělám</h2>
+    <p>Od loga přes plakát až po web. Klikni na projekt pod oborem a ukážu ti ho celý.</p>
+  </div>
+  <div class="bento">
+    <article class="tile t-identity" style="--c:#ECE0D1; --t:#4E2920">
+      <div class="tile-text">
+        <h3>Vizuální identity</h3>
+        <p>Logo, barvy, písmo a pravidla, jak značku používat. Aby vypadala stejně na kelímku i na webu.</p>
+        <div class="tile-links"><a href="#p-kaves">Káves</a></div>
+      </div>
+      <div class="tile-art" aria-hidden="true">
+        <img class="a1" src="images/web/kaves-hrnek.jpg" alt="" loading="lazy">
+        <img class="a2" src="images/web/kaves-mikina1.jpg" alt="" loading="lazy">
+      </div>
+    </article>
+
+    <article class="tile t-posters" style="--c:#3C3738; --t:#F3E8F1">
+      <div class="tile-text">
+        <h3>Plakáty a letáky</h3>
+        <p>Tiskoviny, které zaujmou z dálky a řeknou všechno podstatné na první pohled.</p>
+        <div class="tile-links"><a href="#p-festival">Zrće Festival</a><a href="#p-pepper">Pepper King</a><a href="#p-halloween">Halloween</a></div>
+      </div>
+      <div class="tile-art" aria-hidden="true">
+        <img class="a1" src="images/web/pepper-king-combo.jpg" alt="" loading="lazy">
+        <img class="a2" src="images/web/festival-plakat.jpg" alt="" loading="lazy">
+        <img class="a3" src="images/web/halloween-plakat.jpg?v=2" alt="" loading="lazy">
+      </div>
+    </article>
+
+    <article class="tile t-pack" style="--c:#C9DCE7; --t:#1E1A18">
+      <div class="tile-text">
+        <h3>Obaly a 3D</h3>
+        <p>Etikety v sérii a vizualizace hotového produktu.</p>
+        <div class="tile-links"><a href="#p-cloud">Cloud</a></div>
+      </div>
+      <div class="tile-art" aria-hidden="true"><img class="a1" src="images/web/pivo3.jpg" alt="" loading="lazy"></div>
+    </article>
+
+    <article class="tile t-illu" style="--c:#EA9052; --t:#2B2321">
+      <div class="tile-text">
+        <h3>Ilustrace a infografiky</h3>
+        <p>Vlastní vektorová ilustrace a hodně informací přehledně.</p>
+        <div class="tile-links"><a href="#p-nosorozec">Nosorožec</a></div>
+      </div>
+      <div class="tile-art" aria-hidden="true"><img class="a1" src="images/web/infografika-nosorozec.jpg" alt="" loading="lazy"></div>
+    </article>
+
+    <article class="tile t-web" style="--c:#141414; --t:#F4E6BE">
+      <div class="tile-text">
+        <h3>Weby</h3>
+        <p>Návrh i kód. Prezentace pro firmy a restaurace, které fungují i na mobilu.</p>
+        <div class="tile-links"><a href="#weby">XERIA</a><a href="#weby">Dugi's Burger</a></div>
+      </div>
+      <div class="tile-art">
+        <div class="site mini">
+          <div class="browser">
+            <div class="browser-bar"><i></i><i></i><i></i><span class="b-url">dugis-web2.vercel.app</span></div>
+            <div class="browser-view"><img class="shot" src="images/web/web-dugis.jpg?v=2" alt="Náhled webu Dugi's Burger" loading="lazy"></div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PRÁCE -->
+<div id="prace">
+
+  <nav class="pnav" aria-label="Projekty">
+    <a href="#p-kaves" style="--c:#663B2B"><span>Káves</span></a>
+    <a href="#p-festival" style="--c:#C8367A"><span>Zrće Festival</span></a>
+    <a href="#p-cloud" style="--c:#97B7CA"><span>Cloud</span></a>
+    <a href="#p-pepper" style="--c:#D9A92D"><span>Pepper King</span></a>
+    <a href="#p-nosorozec" style="--c:#EA9052"><span>Nosorožec</span></a>
+    <a href="#p-halloween" style="--c:#E5D64C"><span>Halloween</span></a>
+  </nav>
+
+  <section id="p-kaves" class="project" data-bg="#ECE0D1" data-fg="#4E2920" data-accent="#663B2B">
+    <div class="p-text">
+      <p class="p-kind">Vizuální identita</p>
+      <h2>Káves</h2>
+      <p class="p-desc">Kompletní identita vymyšlené kavárny. Od loga a barevné palety přes výběr písma až po to, jak značka žije na kelímku, mikině a v interiéru.</p>
+      <ul class="p-tags"><li>Logo</li><li>Logomanuál</li><li>Merch</li><li>Vizualizace interiéru</li></ul>
+      <div class="p-foot"><p class="p-type">Školní projekt</p><div class="p-palette" aria-label="Barevná paleta projektu"><span style="--s:#DBC1AC" title="#DBC1AC"></span><span style="--s:#ECE0D1" title="#ECE0D1"></span><span style="--s:#663B2B" title="#663B2B"></span><span style="--s:#4E2920" title="#4E2920"></span><span style="--s:#000000" title="#000000"></span></div></div>
+    </div>
+    <div class="p-media" data-gallery="images/web/kaves-logo-manual.jpg,images/web/kaves-hrnek.jpg,images/web/kaves-mikina1.jpg,images/web/kaves-mikina2.jpg" data-title="Káves">
+      <button class="m-main portrait" data-index="0" aria-label="Zobrazit logomanuál Káves ve velkém"><img src="images/web/kaves-logo-manual.jpg" alt="Logomanuál kavárny Káves" loading="lazy" width="1131" height="1600"></button>
+      <div class="m-thumbs">
+        <button data-index="1" aria-label="Zobrazit kelímek Káves"><img src="images/web/kaves-hrnek.jpg" alt="Kelímek Káves" loading="lazy"></button>
+        <button data-index="2" aria-label="Zobrazit mikinu Káves"><img src="images/web/kaves-mikina1.jpg" alt="Mikina Káves" loading="lazy"></button>
+        <button data-index="3" aria-label="Zobrazit druhou mikinu Káves"><img src="images/web/kaves-mikina2.jpg" alt="Mikina Káves, druhá barva" loading="lazy"></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="p-festival" class="project flip" data-bg="#3C3738" data-fg="#F3E8F1" data-accent="#C8367A">
+    <div class="p-text">
+      <p class="p-kind">Plakát A3</p>
+      <h2>Zrće Festival</h2>
+      <p class="p-desc">Plakát na vystoupení DJ Manene. Fotku jsem zasadil do neonových paprsků a doplnil výrazným futuristickým písmem.</p>
+      <ul class="p-tags"><li>Úprava fotky</li><li>Světelné efekty</li><li>Typografie</li></ul>
+      <div class="p-foot"><p class="p-type">Školní projekt</p><div class="p-palette" aria-label="Barevná paleta projektu"><span style="--s:#3C3738" title="#3C3738"></span><span style="--s:#523843" title="#523843"></span><span style="--s:#C8367A" title="#C8367A"></span><span style="--s:#A77DAD" title="#A77DAD"></span></div></div>
+    </div>
+    <div class="p-media" data-gallery="images/web/festival-plakat.jpg" data-title="Zrće Festival">
+      <button class="m-main portrait" data-index="0" aria-label="Zobrazit plakát Zrće Festival ve velkém"><img src="images/web/festival-plakat.jpg" alt="Plakát Zrće Festival, Manene" loading="lazy" width="1131" height="1600"></button>
+    </div>
+  </section>
+
+  <section id="p-cloud" class="project wide" data-bg="#C9DCE7" data-fg="#1E1A18" data-accent="#2C130B">
+    <div class="p-text">
+      <p class="p-kind">Obal a 3D vizualizace</p>
+      <h2>Cloud</h2>
+      <p class="p-desc">Série tří pivních etiket se společným motivem mraků. Každá příchuť má vlastní barvu, dohromady tvoří jednu rodinu. Lahve jsem vymodeloval a nasvítil ve 3D.</p>
+      <ul class="p-tags"><li>Etikety</li><li>Série</li><li>3D render</li></ul>
+      <div class="p-foot"><p class="p-type">Školní projekt</p><div class="p-palette" aria-label="Barevná paleta projektu"><span style="--s:#97B7CA" title="#97B7CA"></span><span style="--s:#E3DFDD" title="#E3DFDD"></span><span style="--s:#373635" title="#373635"></span><span style="--s:#2C130B" title="#2C130B"></span><span style="--s:#A79889" title="#A79889"></span></div></div>
+    </div>
+    <div class="p-media" data-gallery="images/web/pivo1.jpg,images/web/pivo2.jpg,images/web/pivo3.jpg" data-title="Cloud">
+      <button class="m-main landscape" data-index="0" aria-label="Zobrazit lahve Cloud ve velkém"><img src="images/web/pivo1.jpg" alt="Tři lahve piva Cloud" loading="lazy" width="1600" height="900"></button>
+      <div class="m-thumbs">
+        <button data-index="1" aria-label="Zobrazit druhý pohled"><img src="images/web/pivo2.jpg" alt="Lahve Cloud, druhý pohled" loading="lazy"></button>
+        <button data-index="2" aria-label="Zobrazit třetí pohled"><img src="images/web/pivo3.jpg" alt="Lahve Cloud, třetí pohled" loading="lazy"></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="p-pepper" class="project flip" data-bg="#141414" data-fg="#F4E6BE" data-accent="#D9A92D">
+    <div class="p-text">
+      <p class="p-kind">Leták pro restauraci</p>
+      <h2>Pepper King Combo</h2>
+      <p class="p-desc">Reklamní leták na víkendovou nabídku pro Dugi's Burger. Skutečný klient, skutečný termín a jídlo, ze kterého má dostat hlad každý, kdo jde kolem.</p>
+      <ul class="p-tags"><li>Reklama</li><li>Food foto</li><li>Sazba</li></ul>
+      <div class="p-foot"><p class="p-type">Pro klienta: Dugi's Burger</p><div class="p-palette" aria-label="Barevná paleta projektu"><span style="--s:#141414" title="#141414"></span><span style="--s:#D9A92D" title="#D9A92D"></span><span style="--s:#B8891C" title="#B8891C"></span><span style="--s:#F4E7BE" title="#F4E7BE"></span></div></div>
+    </div>
+    <div class="p-media" data-gallery="images/web/pepper-king-combo.jpg" data-title="Pepper King Combo">
+      <button class="m-main portrait" data-index="0" aria-label="Zobrazit leták Pepper King Combo ve velkém"><img src="images/web/pepper-king-combo.jpg" alt="Leták Dugi's Burger, Pepper King Combo" loading="lazy" width="1131" height="1600"></button>
+    </div>
+  </section>
+
+  <section id="p-nosorozec" class="project" data-bg="#EA9052" data-fg="#2B2321" data-accent="#1F6F6F">
+    <div class="p-text">
+      <p class="p-kind">Infografika a ilustrace</p>
+      <h2>Nosorožec</h2>
+      <p class="p-desc">Infografika o nosorožci s vlastní vektorovou ilustrací savany. Spoustu čísel a textu jsem rozdělil tak, aby se dala přečíst na první pohled.</p>
+      <ul class="p-tags"><li>Ilustrace</li><li>Infografika</li><li>Ikony</li></ul>
+      <div class="p-foot"><p class="p-type">Školní projekt</p><div class="p-palette" aria-label="Barevná paleta projektu"><span style="--s:#EA9052" title="#EA9052"></span><span style="--s:#FDF1DB" title="#FDF1DB"></span><span style="--s:#8D5538" title="#8D5538"></span><span style="--s:#63B5B5" title="#63B5B5"></span><span style="--s:#474B52" title="#474B52"></span></div></div>
+    </div>
+    <div class="p-media" data-gallery="images/web/infografika-nosorozec.jpg" data-title="Nosorožec">
+      <button class="m-main portrait" data-index="0" aria-label="Zobrazit infografiku Nosorožec ve velkém"><img src="images/web/infografika-nosorozec.jpg" alt="Infografika Nosorožec" loading="lazy" width="1131" height="1600"></button>
+    </div>
+  </section>
+
+  <section id="p-halloween" class="project flip" data-bg="#2B5697" data-fg="#FFF3D6" data-accent="#E5D64C">
+    <div class="p-text">
+      <p class="p-kind">Plakát a pozvánka</p>
+      <h2>Halloween party</h2>
+      <p class="p-desc">Plakát na halloweenskou akci. Strašidelný hrad, dýně a měsíc, a k tomu všechny informace o akci, které musí být vidět i z dálky.</p>
+      <ul class="p-tags"><li>Ilustrace</li><li>Plakát</li><li>Pozvánka</li></ul>
+      <div class="p-foot"><p class="p-type">Školní projekt</p><div class="p-palette" aria-label="Barevná paleta projektu"><span style="--s:#2B254B" title="#2B254B"></span><span style="--s:#2B5697" title="#2B5697"></span><span style="--s:#E5D64C" title="#E5D64C"></span><span style="--s:#F08429" title="#F08429"></span><span style="--s:#4A494C" title="#4A494C"></span><span style="--s:#010102" title="#010102"></span></div></div>
+    </div>
+    <div class="p-media" data-gallery="images/web/halloween-plakat.jpg?v=2" data-title="Halloween party">
+      <button class="m-main portrait" data-index="0" aria-label="Zobrazit plakát Halloween party ve velkém"><img src="images/web/halloween-plakat.jpg?v=2" alt="Plakát Halloween party" loading="lazy" width="1131" height="1600"></button>
+    </div>
+  </section>
+
+</div>
+
+<!-- JAK PRACUJU -->
+<section id="postup" class="block process-block" data-bg="#EEF0F4" data-fg="#121318" data-accent="#4B3BFF">
+  <div class="block-head">
+    <h2>Jak pracuju</h2>
+    <p>Ať jde o školní zadání, nebo zakázku, postupuju pokaždé podobně.</p>
+  </div>
+  <ol class="process">
+    <li><span class="step">1</span><h3>Poslouchám</h3><p>Zjistím, pro koho to je, kde se to bude používat a co má výsledek splnit.</p></li>
+    <li><span class="step">2</span><h3>Skicuju</h3><p>Hledám víc směrů najednou. Nejdřív rychle na papíře, pak v počítači.</p></li>
+    <li><span class="step">3</span><h3>Ladím</h3><p>Vybraný návrh dotahuju: písmo, barvy, mezery. Zapracuju připomínky.</p></li>
+    <li><span class="step">4</span><h3>Předávám</h3><p>Připravím data pro tisk, soubory pro sítě nebo spustím hotový web.</p></li>
+  </ol>
+</section>
+
+<!-- WEBY -->
+<section id="weby" class="block" data-bg="#EEF0F4" data-fg="#121318" data-accent="#4B3BFF">
+  <div class="block-head">
+    <h2>Weby</h2>
+    <p>Grafiku umím i nakódovat. Tyhle weby jsem navrhl a sám napsal. Najeď myší na náhled a můžeš jimi rovnou scrollovat a proklikat je.</p>
+  </div>
+  <div class="sites">
+    <article class="site" data-url="https://xeria.cz">
+      <div class="browser">
+        <div class="browser-bar"><i></i><i></i><i></i><span class="b-url"></span></div>
+        <div class="browser-view"><span class="try-hint">Najeď a scrolluj</span><img class="shot" src="images/web/web-xeria.jpg" alt="Náhled webu XERIA spol. s r.o." loading="lazy"></div>
+      </div>
+      <div class="site-info">
+        <div>
+          <h3>XERIA spol. s r.o.</h3>
+          <p>Firemní web výrobce nádob a vík pro distribuční transformátory.</p>
+        </div>
+        <a class="btn site-link" href="https://xeria.cz" target="_blank" rel="noopener">Otevřít web</a>
+      </div>
+    </article>
+    <article class="site" data-url="https://dugis-web2.vercel.app">
+      <div class="browser">
+        <div class="browser-bar"><i></i><i></i><i></i><span class="b-url"></span></div>
+        <div class="browser-view"><span class="try-hint">Najeď a scrolluj</span><img class="shot" src="images/web/web-dugis.jpg?v=2" alt="Náhled webu Dugi's Burger" loading="lazy"></div>
+      </div>
+      <div class="site-info">
+        <div>
+          <h3>Dugi's Burger</h3>
+          <p>Web burgerové restaurace s menu, rezervací stolu a kontaktem.</p>
+        </div>
+        <a class="btn site-link" href="https://dugis-web2.vercel.app" target="_blank" rel="noopener">Otevřít web</a>
+      </div>
+    </article>
+  </div>
+</section>
+
 <!-- O MNĚ -->
-<section id="o-mne" class="section about reveal">
-  <div class="wrap">
-    <div class="kicker"><span class="dot"></span><span class="k-idx">L02</span>O mně</div>
-    <div class="about-grid">
-      <div class="portrait">
-        <div class="crop tl"></div><div class="crop tr"></div><div class="crop bl"></div><div class="crop br"></div>
-        <div class="portrait-label mono">TB_PORTRET.JPG</div>
-      </div>
-      <div class="about-text">
-        <h2 style="margin-bottom:20px;"><span class="h2-mask"><span class="h2-in">Design je pro mě řemeslo s pravidly — i s místem na hru.</span></span></h2>
-        <p class="st">Jsem <strong>grafický designér</strong>, který má kromě Illustratoru a Photoshopu otevřený i editor kódu. Většinu času řeším vizuální identitu, tiskoviny a digitální design, ale rád si projekt i sám naprogramuju — ať jde o jednostránkový web, nebo drobnou interaktivní animaci.</p>
-        <p class="st">Baví mě práce, kde má každý detail svůj důvod: zvolené písmo, mezera mezi řádky, barva, která se vrací v celém systému. Pracuju rád v malém týmu i samostatně, s jasným zadáním i s prázdnou stránkou.</p>
-        <div class="stat-row">
-          <div class="stat st"><div class="num" data-count="3" data-suffix="+">3+</div><div class="lbl">let praxe</div></div>
-          <div class="stat st"><div class="num" data-count="40" data-suffix="+">40+</div><div class="lbl">dokončených projektů</div></div>
-          <div class="stat st"><div class="num" data-count="12">12</div><div class="lbl">spokojených klientů</div></div>
-        </div>
-      </div>
+<section id="o-mne" class="block" data-bg="#EEF0F4" data-fg="#121318" data-accent="#4B3BFF">
+  <div class="about">
+    <div class="about-lead">
+      <h2>O mně</h2>
+      <p class="big">Studuju IT na střední škole a grafice se věnuju, kdykoliv můžu. Baví mě, když má každý detail svůj důvod.</p>
+      <p>Za tři roky jsem udělal přes 40 projektů ve škole, pro kamarády i pro první klienty. Kombinace grafiky a kódu mi dává možnost dotáhnout nápad od skici až po hotový web. Po maturitě chci jít studovat grafický design na UTB ve Zlíně.</p>
+      <dl class="stats">
+        <div><dt>3+</dt><dd>roky s grafikou</dd></div>
+        <div><dt>40+</dt><dd>dokončených projektů</dd></div>
+        <div><dt>12</dt><dd>spokojených klientů</dd></div>
+      </dl>
     </div>
-  </div>
-</section>
 
-<!-- VZDĚLÁNÍ -->
-<section id="vzdelani" class="section education reveal">
-  <div class="wrap">
-    <div class="kicker"><span class="dot" style="background:var(--yellow)"></span><span class="k-idx">L03</span>Vzdělání</div>
-    <h2><span class="h2-mask"><span class="h2-in">Odkud to všechno vychází</span></span></h2>
-    <div class="timeline">
-      <div class="t-item st">
-        <span class="t-period mono">2023 — 2027</span>
-        <h3>Střední škola Baltaci</h3>
-        <span class="t-org">Obor IT</span>
-        <p>Zaměření na základy grafického designu a digitálního vývoje.</p>
-      </div>
-      <div class="t-item st">
-        <span class="t-period mono">2025</span>
-        <h3>Kurz Graphic Design</h3>
-        <span class="t-org">Online akademie</span>
-        <p>Základy kresby, typografie a digitální grafiky. Rozšíření zkušeností s Adobe balíkem a sazbou.</p>
-      </div>
-      <div class="t-item st">
-        <span class="t-period mono">2027 — 2031</span>
-        <h3>(Do budoucna) Univerzita Tomáše Bati ve Zlíně</h3>
-        <span class="t-org">Grafický design</span>
-        <p>Ateliér grafického designu, současné tendence v grafickém designu, písmo, typografie, realizační technologie oboru, klasické grafické techniky, vizuální kompozice, výuka kresby, teorie a metodologie designu, digitální prezentace a kompozice, současné výtvarné umění.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ZKUŠENOSTI -->
-<section id="zkusenosti" class="section experience reveal">
-  <div class="wrap">
-    <div class="kicker"><span class="dot" style="background:var(--blue)"></span><span class="k-idx">L04</span>Zkušenosti</div>
-    <h2><span class="h2-mask"><span class="h2-in">Kde jsem to zkoušel v praxi</span></span></h2>
-    <div class="timeline">
-      <div class="t-item st">
-        <span class="t-period mono">2023 — doposud</span>
-        <h3>Grafický designér</h3>
-        <span class="t-org">Freelance</span>
-        <p>Samostatná spolupráce se známými — loga, plakáty, sociální sítě a jednoduché webové prezentace včetně kódování.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- DOVEDNOSTI -->
-<section id="dovednosti" class="section skills reveal">
-  <div class="wrap">
-    <div class="kicker"><span class="dot" style="background:var(--blue)"></span><span class="k-idx">L05</span>Dovednosti</div>
-    <h2><span class="h2-mask"><span class="h2-in">Nástroje, se kterými pracuju</span></span></h2>
-    <div class="skills-groups">
+    <div class="skills">
       <div class="skill-group">
-        <h3>Design nástroje</h3>
-        <div class="chip-grid">
-          <div class="chip st"><div><div class="name">Adobe Illustrator</div><div class="level mono">Pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span></div></div>
-          <div class="chip st"><div><div class="name">Adobe Photoshop</div><div class="level mono">Pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span></div></div>
-          <div class="chip st"><div><div class="name">Figma</div><div class="level mono">Středně pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span><span></span></div></div>
-          <div class="chip st"><div><div class="name">Adobe InDesign</div><div class="level mono">Středně pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span><span></span></div></div>
-          <div class="chip st"><div><div class="name">After Effects</div><div class="level mono">Začátečník</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span></span><span></span><span></span></div></div>
-          <div class="chip st"><div><div class="name">Procreate</div><div class="level mono">Začátečník</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span></span><span></span><span></span></div></div>
-        </div>
+        <h3>Grafika</h3>
+        <ul>
+          <li style="--l:4"><span>Illustrator</span><b>Pokročilý</b></li>
+          <li style="--l:4"><span>Photoshop</span><b>Pokročilý</b></li>
+          <li style="--l:3"><span>Figma</span><b>Středně pokročilý</b></li>
+          <li style="--l:3"><span>InDesign</span><b>Středně pokročilý</b></li>
+          <li style="--l:2"><span>After Effects</span><b>Začátečník</b></li>
+          <li style="--l:2"><span>Procreate</span><b>Začátečník</b></li>
+        </ul>
       </div>
       <div class="skill-group">
-        <h3>Programování &amp; web</h3>
-        <div class="chip-grid">
-          <div class="chip st"><div><div class="name">HTML &amp; CSS</div><div class="level mono">Středně pokročilý</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span class="fill"></span><span></span><span></span></div></div>
-          <div class="chip st"><div><div class="name">JavaScript</div><div class="level mono">Začátečník</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span></span><span></span><span></span></div></div>
-          <div class="chip st"><div><div class="name">React</div><div class="level mono">Začátečník</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span></span><span></span><span></span></div></div>
-          <div class="chip st"><div><div class="name">Python</div><div class="level mono">Začátečník</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span></span><span></span><span></span></div></div>
-          <div class="chip st"><div><div class="name">WordPress</div><div class="level mono">Začátečník</div></div><div class="ticks5"><span class="fill"></span><span class="fill"></span><span></span><span></span><span></span></div></div>
-          <div class="chip st"><div><div class="name">Git</div><div class="level mono">Základy</div></div><div class="ticks5"><span class="fill"></span><span></span><span></span><span></span><span></span></div></div>
-        </div>
+        <h3>Kód a web</h3>
+        <ul>
+          <li style="--l:3"><span>HTML a CSS</span><b>Středně pokročilý</b></li>
+          <li style="--l:2"><span>JavaScript</span><b>Začátečník</b></li>
+          <li style="--l:2"><span>React</span><b>Začátečník</b></li>
+          <li style="--l:2"><span>Python</span><b>Začátečník</b></li>
+          <li style="--l:2"><span>WordPress</span><b>Začátečník</b></li>
+          <li style="--l:1"><span>Git</span><b>Základy</b></li>
+        </ul>
       </div>
     </div>
   </div>
-</section>
 
-<!-- TVORBA / GALERIE -->
-<section id="tvorba" class="section gallery reveal">
-  <div class="wrap">
-    <div class="kicker"><span class="dot" style="background:var(--yellow)"></span><span class="k-idx">L06</span>Tvorba</div>
-    <h2><span class="h2-mask"><span class="h2-in">Výběr z poslední práce</span></span></h2>
-    <div class="group-head group-head--first">
-      <h3>Grafika</h3>
-      <span class="mono">Plakáty · branding · packaging · klikni pro zvětšení</span>
-    </div>
-    <div class="gallery-grid">
-
-      <div class="tile st" data-gallery="images/web/kaves-logo-manual.jpg,images/web/kaves-hrnek.jpg,images/web/kaves-mikina1.jpg,images/web/kaves-mikina2.jpg">
-        <span class="tag">Vizuální identita</span>
-        <span class="count mono">4 foto</span>
-        <img src="images/web/kaves-logo-manual.jpg" alt="Káves — vizuální identita" loading="lazy">
-        <div class="info"><div class="ttl">Káves — vizuální identita</div><div class="sub mono">Logomanuál · merch · školní projekt</div></div>
-      </div>
-
-      <div class="tile tile--contain st" data-gallery="images/web/pivo1.jpg,images/web/pivo2.jpg,images/web/pivo3.jpg">
-        <span class="tag">Packaging</span>
-        <span class="count mono">3 foto</span>
-        <img src="images/web/pivo1.jpg" alt="Cloud — pivní etikety" loading="lazy">
-        <div class="info"><div class="ttl">Cloud — pivní etikety</div><div class="sub mono">Etiketa · 3D vizualizace · školní projekt</div></div>
-      </div>
-
-      <div class="tile st" data-gallery="images/web/festival-plakat.jpg">
-        <span class="tag">Plakát</span>
-        <img src="images/web/festival-plakat.jpg" alt="Zrće Festival — Manene" loading="lazy">
-        <div class="info"><div class="ttl">Zrće Festival — Manene</div><div class="sub mono">Plakát · A3 · školní projekt</div></div>
-      </div>
-
-      <div class="tile st" data-gallery="images/web/halloween-plakat.jpg">
-        <span class="tag">Plakát</span>
-        <img src="images/web/halloween-plakat.jpg" alt="Halloween party" loading="lazy">
-        <div class="info"><div class="ttl">Halloween party</div><div class="sub mono">Plakát · pozvánka · školní projekt</div></div>
-      </div>
-
-      <div class="tile st" data-gallery="images/web/pepper-king-combo.jpg">
-        <span class="tag">Plakát</span>
-        <img src="images/web/pepper-king-combo.jpg" alt="Dugi's Burger — Pepper King Combo" loading="lazy">
-        <div class="info"><div class="ttl">Dugi's Burger — Pepper King Combo</div><div class="sub mono">Reklamní leták</div></div>
-      </div>
-
-      <div class="tile st" data-gallery="images/web/infografika-nosorozec.jpg">
-        <span class="tag">Infografika</span>
-        <img src="images/web/infografika-nosorozec.jpg" alt="Nosorožec" loading="lazy">
-        <div class="info"><div class="ttl">Nosorožec</div><div class="sub mono">Infografika · ilustrace · školní projekt</div></div>
-      </div>
-
-    </div>
-    <p class="gallery-note"></p>
-
-    <!-- WEBY: doplň adresu do data-url (a případně screenshot do data-shot) -->
-    <div class="group-head">
-      <h3>Weby</h3>
-      <span class="mono">Živý náhled · klikni pro návštěvu</span>
-    </div>
-    <div class="sites-grid">
-
-      <article class="site-card st" data-url="https://xeria.cz">
-        <div class="browser">
-          <div class="browser-bar">
-            <span class="b-dot" style="background:var(--coral)"></span><span class="b-dot" style="background:var(--yellow)"></span><span class="b-dot" style="background:var(--blue)"></span>
-            <span class="b-url mono"></span>
-          </div>
-          <div class="browser-view">
-            <div class="site-placeholder mono">Náhled webu</div>
-          </div>
-        </div>
-        <div class="site-info">
-          <div>
-            <span class="tag-inline mono">Webdesign</span>
-            <h3>XERIA spol. s r.o.</h3>
-            <p>Firemní web výrobce nádob a vík pro distribuční transformátory.</p>
-          </div>
-          <a class="btn btn-solid site-link" href="#" target="_blank" rel="noopener">Navštívit web <span class="arrow">→</span></a>
-        </div>
-      </article>
-
-      <article class="site-card st" data-url="https://dugis-web.vercel.app">
-        <div class="browser">
-          <div class="browser-bar">
-            <span class="b-dot" style="background:var(--coral)"></span><span class="b-dot" style="background:var(--yellow)"></span><span class="b-dot" style="background:var(--blue)"></span>
-            <span class="b-url mono"></span>
-          </div>
-          <div class="browser-view">
-            <div class="site-placeholder mono">Náhled webu</div>
-          </div>
-        </div>
-        <div class="site-info">
-          <div>
-            <span class="tag-inline mono">Webdesign</span>
-            <h3>Dugi's Burger</h3>
-            <p>Web burgerové restaurace s menu, rezervací stolu a kontaktem.</p>
-          </div>
-          <a class="btn btn-solid site-link" href="#" target="_blank" rel="noopener">Navštívit web <span class="arrow">→</span></a>
-        </div>
-      </article>
-
-    </div>
-  </div>
+  <ol class="timeline">
+    <li><span class="t-when">2023</span><h4>SŠ Baltaci, obor IT</h4><p>Programování, základy grafiky a digitálního vývoje. Do 2027.</p></li>
+    <li><span class="t-when">2023</span><h4>První zakázky</h4><p>Loga, plakáty, sociální sítě a weby pro známé a místní podniky.</p></li>
+    <li><span class="t-when">2025</span><h4>Kurz Graphic Design</h4><p>Kresba, typografie, digitální grafika a sazba v Adobe.</p></li>
+    <li class="future"><span class="t-when">2027</span><h4>UTB ve Zlíně</h4><p>Cíl: obor grafický design, ateliér, písmo a typografie.</p></li>
+  </ol>
 </section>
 
 <!-- KONTAKT -->
-<section id="kontakt" class="section contact reveal">
-  <div class="wrap">
-    <div class="kicker"><span class="dot"></span><span class="k-idx">L07</span>Kontakt</div>
-    <h2><span class="h2-mask"><span class="h2-in">Máš pro mě projekt?</span></span></h2>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <p class="st">Ozvi se s čímkoliv od jednoho loga až po kompletní vizuální identitu. Obvykle odpovídám do dvou pracovních dnů.</p>
-        <div class="c-line st"><span class="l mono">E-mail</span><a href="mailto:tomas210408@gmail.com">tomas210408@gmail.com</a></div>
-        <div class="c-line st"><span class="l mono">Telefon</span><a href="tel:+420737970113">+420 737 970 113</a></div>
-        <div class="c-line st"><span class="l mono">Lokace</span><span>Zlín, Česká republika</span></div>
-        <div class="social-row st">
-          <a href="#">Behance</a>
-          <a href="#">Dribbble</a>
-          <a href="#">Instagram</a>
-          <a href="#">LinkedIn</a>
+<section id="kontakt" class="contact" data-bg="#121318" data-fg="#EEF0F4" data-accent="#8C80FF">
+  <div class="contact-inner">
+    <div class="contact-copy">
+      <h2>Pojďme něco vytvořit</h2>
+      <p>Hledáš logo, plakát nebo web? Nebo chceš spolupracovat na školním či vlastním projektu? Napiš mi, odpovídám obvykle do dvou dnů.</p>
+      <div class="cards">
+        <div class="ccard">
+          <span class="cc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></span>
+          <div class="cc-body">
+            <span class="cc-label">E-mail</span>
+            <a class="cc-value" href="mailto:tomas210408@gmail.com">tomas210408@gmail.com</a>
+          </div>
+          <div class="cc-actions">
+            <a class="cc-btn" href="mailto:tomas210408@gmail.com">Napsat</a>
+            <button class="cc-btn copy" type="button" data-copy="tomas210408@gmail.com">Kopírovat</button>
+          </div>
         </div>
+        <div class="ccard">
+          <span class="cc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.6 3.5h2.6l1.4 4-2 1.4a12 12 0 0 0 6.5 6.5l1.4-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span>
+          <div class="cc-body">
+            <span class="cc-label">Telefon</span>
+            <a class="cc-value" href="tel:+420737970113">+420 737 970 113</a>
+          </div>
+          <div class="cc-actions">
+            <a class="cc-btn" href="tel:+420737970113">Zavolat</a>
+            <button class="cc-btn copy" type="button" data-copy="+420737970113">Kopírovat</button>
+          </div>
+        </div>
+        <p class="cc-note"><span class="dot" aria-hidden="true"></span>Zlín, Česká republika. Beru nové zakázky i spolupráce.</p>
       </div>
-      <form id="contactForm">
-        <div class="field st"><label for="jmeno">Jméno</label><input id="jmeno" name="jmeno" type="text" placeholder="Jak se jmenuješ" required></div>
-        <div class="field st"><label for="email">E-mail</label><input id="email" name="email" type="email" placeholder="tvuj@email.cz" required></div>
-        <div class="field st"><label for="zprava">Zpráva</label><textarea id="zprava" name="zprava" rows="4" placeholder="Pár slov o projektu..." required></textarea></div>
-        <div class="form-foot st">
-          <button type="submit" class="btn btn-light">Odeslat zprávu <span class="arrow">→</span></button>
-          <span class="form-status" id="formStatus"></span>
-        </div>
-      </form>
+      <!-- Sociální sítě: doplň odkazy a odkomentuj
+      <p class="socials"><a href="https://www.instagram.com/...">Instagram</a><a href="https://www.behance.net/...">Behance</a></p>
+      -->
     </div>
+    <form id="contactForm" class="form" novalidate>
+      <p class="form-title">Nebo mi napiš rovnou tady</p>
+      <!-- past na spamboty: skryté pole, člověk ho nevyplní -->
+      <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label>Jméno<input id="jmeno" name="jmeno" type="text" autocomplete="name" required></label>
+      <label>E-mail<input id="email" name="email" type="email" autocomplete="email" required></label>
+      <label>Zpráva<textarea id="zprava" name="zprava" rows="5" required></textarea></label>
+      <div class="form-foot">
+        <button type="submit" class="btn">Odeslat zprávu</button>
+        <span class="form-status" id="formStatus" role="status"></span>
+      </div>
+    </form>
   </div>
+  <footer class="foot">
+    <div class="foot-card">
+      <!-- pruh z barev všech projektů -->
+      <div class="foot-stripe" aria-hidden="true">
+        <span style="--s:#DBC1AC"></span><span style="--s:#C8367A"></span><span style="--s:#97B7CA"></span>
+        <span style="--s:#D9A92D"></span><span style="--s:#EA9052"></span><span style="--s:#2B5697"></span>
+      </div>
+
+      <div class="foot-grid">
+        <div class="foot-about">
+          <p class="foot-brand">Tomáš Bobál</p>
+          <p>Student grafického designu ze Zlína. Plakáty, identity, obaly a weby, které si sám nakóduju.</p>
+        </div>
+        <nav class="foot-col" aria-label="Patička">
+          <p class="foot-title">Web</p>
+          <a href="#co-delam">Co dělám</a>
+          <a href="#prace">Práce</a>
+          <a href="#postup">Jak pracuju</a>
+          <a href="#weby">Weby</a>
+          <a href="#o-mne">O mně</a>
+        </nav>
+        <div class="foot-col">
+          <p class="foot-title">Kontakt</p>
+          <a href="mailto:tomas210408@gmail.com">tomas210408@gmail.com</a>
+          <a href="tel:+420737970113">+420 737 970 113</a>
+          <span>Zlín, Česká republika</span>
+        </div>
+        <a class="to-top" href="#uvod" aria-label="Zpět nahoru">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+          <span>Nahoru</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2026 Tomáš Bobál</span>
+    </div>
+  </footer>
 </section>
 
 </main>
 
-<footer class="status-bar">
-  <span>© 2026 Tomáš Bobál · Grafika &amp; trochu kódu</span>
-  <a href="#uvod">Zpět nahoru ↑</a>
-</footer>
+<!-- Mobilní navigace: plovoucí lišta dole -->
+<nav class="tabbar" id="tabbar" aria-label="Navigace">
+  <span class="tab-pill" aria-hidden="true"></span>
+  <a href="#co-delam" data-tab="co-delam">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>
+    <span>Co dělám</span>
+  </a>
+  <a href="#prace" data-tab="prace">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="m4 17 5-4.5 4 3.5 2.5-2 4.5 4"/></svg>
+    <span>Práce</span>
+  </a>
+  <a href="#weby" data-tab="weby">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9h18"/><circle cx="6" cy="6.8" r=".6"/><circle cx="8.3" cy="6.8" r=".6"/></svg>
+    <span>Weby</span>
+  </a>
+  <a href="#o-mne" data-tab="o-mne">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-4 4.2-5.8 7.5-5.8s6.3 1.8 7.5 5.8"/></svg>
+    <span>O mně</span>
+  </a>
+  <a href="#kontakt" data-tab="kontakt">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>
+    <span>Kontakt</span>
+  </a>
+</nav>
 
-<div class="lightbox" id="lightbox" aria-hidden="true">
-  <button class="lightbox-close" aria-label="Zavřít">×</button>
-  <button class="lightbox-nav prev" aria-label="Předchozí">‹</button>
-  <img alt="">
-  <button class="lightbox-nav next" aria-label="Další">›</button>
-  <span class="lightbox-counter mono"></span>
+<div class="cursor" id="cursor" aria-hidden="true">Zobrazit</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Náhled práce" hidden>
+  <button class="lb-close" aria-label="Zavřít">Zavřít</button>
+  <button class="lb-nav prev" aria-label="Předchozí obrázek">‹</button>
+  <figure>
+    <img alt="">
+    <figcaption><span class="lb-title"></span><span class="lb-count"></span></figcaption>
+  </figure>
+  <button class="lb-nav next" aria-label="Další obrázek">›</button>
 </div>
-<script src="script.js"></script>
+
+<script src="script.js?v=38"></script>
 </body>
 </html>
