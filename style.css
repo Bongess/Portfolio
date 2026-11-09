@@ -61,6 +61,18 @@ button{font:inherit; color:inherit;}
   backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
 }
 .brand{font-family:var(--display); font-weight:700; font-size:16px; text-decoration:none; letter-spacing:-.01em;}
+/* přepínač jazyka CZ / EN */
+.lang{
+  display:flex; padding:3px; border-radius:999px; margin-left:auto; margin-right:8px;
+  background:color-mix(in srgb, var(--fg) 8%, transparent);
+}
+.lang a{
+  min-width:38px; padding:5px 10px; border-radius:999px; text-align:center;
+  font-size:12.5px; font-weight:700; letter-spacing:.04em; text-decoration:none;
+  opacity:.6; transition:background-color .25s, color .25s, opacity .25s;
+}
+.lang a:hover{opacity:1;}
+.lang a.on{background:var(--fg); color:var(--bg); opacity:1;}
 .nav{display:flex; align-items:center; gap:4px;}
 .nav a{padding:8px 14px; border-radius:999px; text-decoration:none; font-weight:550; font-size:15px; transition:background-color .2s;}
 .nav a:hover{background:var(--line);}
@@ -499,7 +511,14 @@ body.in-projects .pnav{opacity:1; transform:translate(0,-50%); pointer-events:au
     transform:translate(-50%, 0);
     transition:transform .45s var(--ease), background-color .8s, color .8s;
   }
-  .tabbar.hide{transform:translate(-50%, calc(100% + 30px));}
+  /* kompaktní lišta při scrollu dolů: menší a bez popisků, ale pořád po ruce */
+  .tabbar{transition:transform .45s var(--ease), max-width .45s var(--ease), padding .35s var(--ease), background-color .8s, color .8s;}
+  .tabbar.compact{max-width:300px; padding:4px;}
+  .tabbar.compact a{min-height:42px; gap:0;}
+  .tabbar.compact a > span{max-height:0; opacity:0;}
+  .tabbar.compact .tab-pill{top:4px; bottom:4px;}
+  .tabbar a > span{max-height:16px; overflow:hidden; transition:max-height .3s var(--ease), opacity .2s;}
+  .tabbar a{transition:opacity .25s, color .3s, min-height .35s var(--ease);}
   .tabbar a{
     position:relative; z-index:1;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
@@ -523,8 +542,6 @@ body.in-projects .pnav{opacity:1; transform:translate(0,-50%); pointer-events:au
   .tabbar :focus-visible{outline-color:var(--bg);}
 
   /* horní hlavička: jen jméno, schová se spolu s lištou */
-  .top{transition:transform .45s var(--ease), background-color .4s;}
-  .top.hide{transform:translateY(-100%);}
   .nav{display:none;}
   body{padding-bottom:calc(96px + env(safe-area-inset-bottom));}
   .foot{padding-bottom:20px;}

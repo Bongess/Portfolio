@@ -1,4 +1,29 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---------- Texty ve skriptu v obou jazycích (podle <html lang>) ----------
+const LANG = document.documentElement.lang === 'en' ? 'en' : 'cs';
+const T = {
+  cs: {
+    livePreview: 'Živý náhled webu ',
+    copied: 'Zkopírováno', copyFail: 'Nejde kopírovat', copy: 'Kopírovat',
+    fillAll: 'Vyplň jméno, e-mail i zprávu.',
+    checkEmail: 'Zkontroluj prosím e-mailovou adresu.',
+    sending: 'Odesílám…', sent: 'Odesláno', send: 'Odeslat zprávu',
+    subject: 'Nová zpráva z portfolia od ',
+    thanks: 'Díky, zpráva je odeslaná. Ozvu se co nejdřív.',
+    failed: 'Zprávu se nepodařilo odeslat. Zkus to znovu, nebo napiš přímo na tomas210408@gmail.com.'
+  },
+  en: {
+    livePreview: 'Live website preview ',
+    copied: 'Copied', copyFail: 'Can\'t copy', copy: 'Copy',
+    fillAll: 'Please fill in your name, email and message.',
+    checkEmail: 'Please check your email address.',
+    sending: 'Sending…', sent: 'Sent', send: 'Send message',
+    subject: 'New portfolio message (EN) from ',
+    thanks: 'Thanks, your message has been sent. I\'ll get back to you soon.',
+    failed: 'The message couldn\'t be sent. Please try again or email me at tomas210408@gmail.com.'
+  }
+}[LANG];
 const root = document.documentElement;
 root.classList.add('js');
 
@@ -36,31 +61,27 @@ function setTab(id){
     tabPill.style.transform = 'translateX(' + active.offsetLeft + 'px)';
   }
 }
-window.addEventListener('resize', () => setTab(tabbar.querySelector('a.active')?.dataset.tab));
+// zvýraznění aktivní položky sedí i během zmenšování/zvětšování lišty
+new ResizeObserver(() => setTab(tabbar.querySelector('a.active')?.dataset.tab)).observe(tabbar);
 
-// při scrollu dolů se lišta i hlavička schovají, při scrollu nahoru hned vrátí
-let lastY = window.scrollY;
-// po kliknutí na položku nechat lištu viditelnou, dokud stránka nedojede k cíli
-let navTarget = null, navTimeout = 0;
-function endNav(){ navTarget = null; clearTimeout(navTimeout); lastY = window.scrollY; }
-tabLinks.forEach(a => a.addEventListener('click', () => {
-  navTarget = document.querySelector(a.getAttribute('href'));
-  clearTimeout(navTimeout);
-  navTimeout = setTimeout(endNav, 4000); // pojistka
-}));
+// Lišta je vidět pořád. Při scrollu dolů se jen zmenší (ikony bez popisků),
+// při scrollu nahoru, po zastavení nebo po kliknutí se vrátí do plné velikosti.
+let lastY = window.scrollY, idleTimer = 0, navUntil = 0;
+const setCompact = on => {
+  if (tabbar.classList.contains('compact') === on) return;
+  tabbar.classList.toggle('compact', on);
+};
+tabLinks.forEach(a => a.addEventListener('click', () => { navUntil = Date.now() + 1500; setCompact(false); }));
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
-  if (navTarget){
-    if (Math.abs(navTarget.getBoundingClientRect().top) < 4) endNav(); // dojeli jsme
-    lastY = y; return;
-  }
-  const nearBottom = y + window.innerHeight > document.documentElement.scrollHeight - 80;
-  const hide = y > lastY && y > 160 && !nearBottom;
-  if (Math.abs(y - lastY) > 6){
-    tabbar.classList.toggle('hide', hide);
-    header.classList.toggle('hide', hide);
+  const dy = y - lastY;
+  if (Date.now() > navUntil && Math.abs(dy) > 6){
+    const nearBottom = y + window.innerHeight > document.documentElement.scrollHeight - 80;
+    setCompact(dy > 0 && y > 160 && !nearBottom);
     lastY = y;
-  }
+  } else if (Date.now() <= navUntil) lastY = y;
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => setCompact(false), 900); // po zastavení zase plná lišta
 }, {passive:true});
 function applyTheme(el){
   root.style.setProperty('--bg', el.dataset.bg);
@@ -175,7 +196,7 @@ document.querySelectorAll('.site[data-url]').forEach(card => {
   const frame = document.createElement('iframe');
   frame.src = url;
   frame.loading = 'lazy';
-  frame.title = 'Živý náhled webu ' + url.replace(/^https?:\/\//, '');
+  frame.title = T.livePreview + url.replace(/^https?:\/\//, '');
   view.appendChild(frame);
   const fit = () => {
     const scale = view.clientWidth / 1440;
@@ -191,12 +212,12 @@ document.querySelectorAll('.cc-btn.copy').forEach(btn => {
   btn.addEventListener('click', async () => {
     try{
       await navigator.clipboard.writeText(btn.dataset.copy);
-      btn.textContent = 'Zkopírováno';
+      btn.textContent = T.copied;
     }catch{
-      btn.textContent = 'Nejde kopírovat';
+      btn.textContent = T.copyFail;
     }
     btn.classList.add('done');
-    setTimeout(() => { btn.textContent = 'Kopírovat'; btn.classList.remove('done'); }, 1800);
+    setTimeout(() => { btn.textContent = T.copy; btn.classList.remove('done'); }, 1800);
   });
 });
 
@@ -220,18 +241,18 @@ form.addEventListener('submit', async e => {
   const email = form.email.value.trim();
   const zprava = form.zprava.value.trim();
   if (!jmeno || !email || !zprava){
-    setStatus('Vyplň jméno, e-mail i zprávu.', 'err');
+    setStatus(T.fillAll, 'err');
     return;
   }
   if (!form.email.checkValidity()){
-    setStatus('Zkontroluj prosím e-mailovou adresu.', 'err');
+    setStatus(T.checkEmail, 'err');
     form.email.focus();
     return;
   }
   if (form._honey.value) return; // vyplnil to robot
 
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Odesílám…';
+  submitBtn.textContent = T.sending;
   setStatus('');
   try{
     const res = await fetch(FORM_ENDPOINT, {
@@ -241,7 +262,7 @@ form.addEventListener('submit', async e => {
         name:jmeno,
         email:email,
         message:zprava,
-        _subject:'Nová zpráva z portfolia od ' + jmeno,
+        _subject:T.subject + jmeno,
         _template:'table',
         _captcha:'false'
       })
@@ -249,12 +270,12 @@ form.addEventListener('submit', async e => {
     const data = await res.json().catch(() => ({}));
     if (!res.ok || data.success === 'false' || data.success === false) throw new Error(data.message || res.status);
     form.reset();
-    setStatus('Díky, zpráva je odeslaná. Ozvu se co nejdřív.', 'ok');
-    submitBtn.textContent = 'Odesláno';
-    setTimeout(() => { submitBtn.textContent = 'Odeslat zprávu'; submitBtn.disabled = false; }, 4000);
+    setStatus(T.thanks, 'ok');
+    submitBtn.textContent = T.sent;
+    setTimeout(() => { submitBtn.textContent = T.send; submitBtn.disabled = false; }, 4000);
   }catch(err){
-    setStatus('Zprávu se nepodařilo odeslat. Zkus to znovu, nebo napiš přímo na tomas210408@gmail.com.', 'err');
-    submitBtn.textContent = 'Odeslat zprávu';
+    setStatus(T.failed, 'err');
+    submitBtn.textContent = T.send;
     submitBtn.disabled = false;
   }
 });
